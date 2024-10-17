@@ -162,16 +162,12 @@ fun CupcakeApp(
                 )
             }
             composable(route = CupcakeScreen.Summary.name) {
-                //val context = LocalContext.current
                 OrderSummaryScreen(
                     orderUiState = uiState,
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-//                    onSendButtonClicked = { subject: String, summary: String ->
-//                        shareOrder(context, subject = subject, summary = summary)
-//                    },
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentType.name) }, //FIXME: Replace with Payment Type Screen
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentType.name) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
