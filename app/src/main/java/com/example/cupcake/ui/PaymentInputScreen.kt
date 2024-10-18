@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
@@ -33,15 +34,17 @@ fun PaymentInputScreen(
     onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    var name by remember { mutableStateOf("") }
-    var cardNumber by remember { mutableStateOf("") }
-    var expDate by remember { mutableStateOf("") }
-    var cvv by remember { mutableStateOf("") }
-    var address1 by remember { mutableStateOf("") }
-    var address2 by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var zip by remember { mutableStateOf("") }
-    var state by remember { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+    var cardNumber by rememberSaveable { mutableStateOf("") }
+    var expDate by rememberSaveable { mutableStateOf("") }
+    var cvv by rememberSaveable { mutableStateOf("") }
+    var address1 by rememberSaveable { mutableStateOf("") }
+    var address2 by rememberSaveable { mutableStateOf("") }
+    var city by rememberSaveable { mutableStateOf("") }
+    var zip by rememberSaveable { mutableStateOf("") }
+    var state by rememberSaveable { mutableStateOf("") }
+
+    //var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
