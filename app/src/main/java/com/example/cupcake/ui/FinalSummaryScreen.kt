@@ -117,8 +117,6 @@ fun FinalSummaryPreview() {
     CupcakeTheme {
         FinalSummaryScreen(
             orderUiState = OrderUiState(48, "Chocolate", "11/23/2012", "$300.00", emptyStringList, "Credit Card", "1234 Fish Lane"),
-            //onSendButtonClicked = { subject: String, summary: String -> },
-
             onSendButtonClicked = {_, _, ->},
             onCancelButtonClicked = {},
             modifier = Modifier.fillMaxHeight()
