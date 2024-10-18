@@ -47,6 +47,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcake.data.DataSource
 import com.example.cupcake.data.OrderUiState
+import com.example.cupcake.ui.FinalSummaryScreen
 import com.example.cupcake.ui.OrderSummaryScreen
 import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
@@ -191,9 +192,16 @@ fun CupcakeApp(
                 val context = LocalContext.current
                 PaymentInputScreen(
                     onNextButtonClicked = { navController.navigate(CupcakeScreen.FinalSummary.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(viewModel, navController)
-                    },
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.FinalSummary.name) {
+                val context = LocalContext.current
+                FinalSummaryScreen(
+                    orderUiState = uiState,
+                    onSendButtonClicked = {subject: String, summary: String -> shareOrder(context, subject = subject, summary = summary)},
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }

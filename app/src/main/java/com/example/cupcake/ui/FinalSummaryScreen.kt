@@ -33,10 +33,9 @@ import com.example.cupcake.ui.theme.CupcakeTheme
 
 @Composable
 fun FinalSummaryScreen(
-    //subtotal: String,
     orderUiState: OrderUiState,
+    onSendButtonClicked: (String, String) -> Unit,
     onCancelButtonClicked: () -> Unit = {},
-    onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val resources = LocalContext.current.resources
@@ -96,7 +95,7 @@ fun FinalSummaryScreen(
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = onNextButtonClicked //{ onSendButtonClicked(newOrder, orderSummary) }
+                    onClick = { onSendButtonClicked(newOrder, orderSummary) }
                 ) {
                     Text(stringResource(R.string.send_to_app))
                 }
@@ -120,6 +119,7 @@ fun FinalSummaryPreview() {
             orderUiState = OrderUiState(48, "Chocolate", "11/23/2012", "$300.00", emptyStringList, "Credit Card", "1234 Fish Lane"),
             //onSendButtonClicked = { subject: String, summary: String -> },
 
+            onSendButtonClicked = {_, _, ->},
             onCancelButtonClicked = {},
             modifier = Modifier.fillMaxHeight()
         )
