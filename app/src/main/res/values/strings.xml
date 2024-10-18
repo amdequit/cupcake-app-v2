@@ -53,6 +53,7 @@
     <string name="card_number">Card Number</string>
     <string name="expiration_date">Expiration Date</string>
     <string name="sec">Security Code</string>
+    <string name="final_summary">Final Summary</string>
     <string name="shipping_label_text">Shipping Address</string>
     <string name="address_line_1">Address Line 1</string>
     <string name="address_line_2">Address Line 2</string>

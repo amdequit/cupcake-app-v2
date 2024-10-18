@@ -62,7 +62,8 @@ enum class CupcakeScreen(@StringRes val title: Int) {
     Pickup(title = R.string.choose_pickup_date),
     Summary(title = R.string.order_summary),
     PaymentType(title = R.string.payment_type),
-    PaymentDetails(title = R.string.payment_info)
+    PaymentDetails(title = R.string.payment_info),
+    FinalSummary(title = R.string.final_summary)
 
 }
 
@@ -189,7 +190,7 @@ fun CupcakeApp(
             composable(route = CupcakeScreen.PaymentDetails.name) {
                 val context = LocalContext.current
                 PaymentInputScreen(
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentDetails.name) },//FIXME: Replace with Updated Summary
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.FinalSummary.name) },
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
