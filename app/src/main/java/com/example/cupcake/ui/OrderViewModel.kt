@@ -79,6 +79,16 @@ class OrderViewModel : ViewModel() {
     }
 
     /**
+    * Set the Payment Details for this order's state
+    */
+    fun setPaymentType(paymentType: String) {
+        _uiState.update { currentState ->
+            currentState.copy(paymentMethod = paymentType)
+        }
+    }
+
+
+    /**
      * Reset the order state
      */
     fun resetOrder() {

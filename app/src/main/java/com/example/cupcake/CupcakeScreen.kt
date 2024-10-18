@@ -184,7 +184,7 @@ fun CupcakeApp(
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
                     options = DataSource.paymentTypes.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setDate(it) },
+                    onSelectionChanged = { viewModel.setPaymentType(it) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
