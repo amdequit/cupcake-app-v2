@@ -79,6 +79,26 @@ class OrderViewModel : ViewModel() {
     }
 
     /**
+    * Set the Payment Details for this order's state
+    */
+    fun setPaymentType(paymentType: String) {
+        _uiState.update { currentState ->
+            currentState.copy(paymentMethod = paymentType)
+        }
+    }
+
+    /**
+     * Set the shipping address for this order's state
+     */
+    fun setShippingAddress(shippingAddress: String) {
+        _uiState.update { currentState ->
+            currentState.copy(shippingAddress = shippingAddress)
+        }
+    }
+
+
+
+    /**
      * Reset the order state
      */
     fun resetOrder() {
@@ -109,7 +129,7 @@ class OrderViewModel : ViewModel() {
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
         val calendar = Calendar.getInstance()
         // add current date and the following 3 dates.
-        repeat(4) {
+        repeat(5) {
             dateOptions.add(formatter.format(calendar.time))
             calendar.add(Calendar.DATE, 1)
         }

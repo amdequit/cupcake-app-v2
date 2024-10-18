@@ -47,10 +47,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcake.data.DataSource
 import com.example.cupcake.data.OrderUiState
+import com.example.cupcake.ui.FinalSummaryScreen
 import com.example.cupcake.ui.OrderSummaryScreen
 import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
+import com.example.cupcake.ui.PaymentInputScreen
 
 /**
  * enum values that represent the screens in the app
@@ -60,7 +62,9 @@ enum class CupcakeScreen(@StringRes val title: Int) {
     Flavor(title = R.string.choose_flavor),
     Pickup(title = R.string.choose_pickup_date),
     Summary(title = R.string.order_summary),
-    PaymentType(title = R.string.payment_type)
+    PaymentType(title = R.string.payment_type),
+    PaymentDetails(title = R.string.payment_info),
+    FinalSummary(title = R.string.final_summary)
 
 }
 
@@ -162,16 +166,12 @@ fun CupcakeApp(
                 )
             }
             composable(route = CupcakeScreen.Summary.name) {
-                //val context = LocalContext.current
                 OrderSummaryScreen(
                     orderUiState = uiState,
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-//                    onSendButtonClicked = { subject: String, summary: String ->
-//                        shareOrder(context, subject = subject, summary = summary)
-//                    },
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentType.name) }, //FIXME: Replace with Payment Type Screen
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentType.name) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
@@ -179,12 +179,30 @@ fun CupcakeApp(
                 val context = LocalContext.current
                 SelectOptionScreen(
                     subtotal = uiState.price,
-                    onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },//FIXME: Replace with Payment Details Screen
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.PaymentDetails.name) },
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
                     options = DataSource.paymentTypes.map { id -> context.resources.getString(id) },
-                    onSelectionChanged = { viewModel.setDate(it) },
+                    onSelectionChanged = { viewModel.setPaymentType(it) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.PaymentDetails.name) {
+                //val context = LocalContext.current
+                PaymentInputScreen(
+                    onNextButtonClicked = { navController.navigate(CupcakeScreen.FinalSummary.name) },
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
+                    onValuesChanged = { viewModel.setShippingAddress(it) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = CupcakeScreen.FinalSummary.name) {
+                val context = LocalContext.current
+                FinalSummaryScreen(
+                    orderUiState = uiState,
+                    onSendButtonClicked = {subject: String, summary: String -> shareOrder(context, subject = subject, summary = summary)},
+                    onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
