@@ -109,7 +109,7 @@ class OrderViewModel : ViewModel() {
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
         val calendar = Calendar.getInstance()
         // add current date and the following 3 dates.
-        repeat(4) {
+        repeat(5) {
             dateOptions.add(formatter.format(calendar.time))
             calendar.add(Calendar.DATE, 1)
         }
