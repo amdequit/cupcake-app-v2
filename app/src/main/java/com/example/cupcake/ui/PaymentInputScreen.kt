@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,12 +37,16 @@ fun PaymentInputScreen(
     var cardNumber by remember { mutableStateOf("") }
     var expDate by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
-    var address by remember { mutableStateOf("") }
+    var address1 by remember { mutableStateOf("") }
+    var address2 by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf("") }
+    var zip by remember { mutableStateOf("") }
+    var state by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
     ){
-        Text(text = "Payment Details")
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ){
@@ -88,15 +93,56 @@ fun PaymentInputScreen(
             verticalAlignment = Alignment.CenterVertically
         ){
             OutlinedTextField(
-                value = address,
-                onValueChange = { address = it },
-                label = { Text("Address") },
+                value = address1,
+                onValueChange = { address1 = it },
+                label = { Text(text = "Address Line 1") },
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            OutlinedTextField(
+                value = address2,
+                onValueChange = { address2 = it },
+                label = { Text(text = "Address Line 2") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            OutlinedTextField(
+                value = city,
+                onValueChange = { city = it },
+                label = { Text(text = "City") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Column() {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ){
+                OutlinedTextField(
+                    value = zip,
+                    onValueChange = { zip = it },
+                    label = { Text("Zip Code") },
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
 
 
+                )
+                OutlinedTextField(
+                    value = state,
+                    onValueChange = { state = it },
+                    label = { Text("State") },
+                    modifier = Modifier.weight(1f)
 
+                )
+            }
+
+        }
+        Spacer(modifier = Modifier.weight(1f))
         //Cancel and Next Button
         Row(
             modifier = Modifier
@@ -123,7 +169,7 @@ fun PaymentInputScreen(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun PaymentInputPreview() {
     CupcakeTheme {
