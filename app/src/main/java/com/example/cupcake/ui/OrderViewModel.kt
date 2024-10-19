@@ -87,6 +87,13 @@ class OrderViewModel : ViewModel() {
         }
     }
 
+    fun setAddress(address: String) {
+        print(address)
+        _uiState.update { currentState ->
+            currentState.copy(shippingAddress = address)
+        }
+    }
+
 
     /**
      * Reset the order state

@@ -17,7 +17,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,10 +34,12 @@ var MAX_EXP_DATE_LENGTH = 4
 var MAX_CVV_LENGTH = 3
 @Composable
 fun PaymentInputScreen(
+    onValueChanged: (String) -> Unit = {},
     onCancelButtonClicked: () -> Unit = {},
     onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
     var name by rememberSaveable { mutableStateOf("") }
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var expDate by rememberSaveable { mutableStateOf("") }
@@ -150,7 +151,10 @@ fun PaymentInputScreen(
         ){
             OutlinedTextField(
                 value = address1,
-                onValueChange = { address1 = it },
+                onValueChange = {
+                    address1 = it
+                    onValueChanged(it)
+                                },
                 singleLine = true,
                 label = { Text(text = "Address Line 1") },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
