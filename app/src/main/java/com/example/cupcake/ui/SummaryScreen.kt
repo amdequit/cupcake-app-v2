@@ -42,7 +42,7 @@ import com.example.cupcake.ui.theme.CupcakeTheme
 
 /**
  * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
- * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
+ * lambda that triggers canceling the order and passes the final order to [onNextButtonClicked]
  * lambda
  */
 @Composable
@@ -105,7 +105,7 @@ fun OrderSummaryScreen(
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = onNextButtonClicked //{ onSendButtonClicked(newOrder, orderSummary) }
+                    onClick = onNextButtonClicked
                 ) {
                     Text(stringResource(R.string.checkout))
                 }
@@ -126,8 +126,7 @@ fun OrderSummaryPreview() {
     CupcakeTheme {
         OrderSummaryScreen(
             orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-            //onSendButtonClicked = { subject: String, summary: String -> },
-
+            onNextButtonClicked = {},
             onCancelButtonClicked = {},
             modifier = Modifier.fillMaxHeight()
         )
