@@ -170,7 +170,6 @@ fun PaymentInputScreen(
                 onClick = {
                     onNextButtonClicked()
                     address = "$address1\n$address2\n$city\n$state $zip"
-                    println("Address: $address")
                     onValuesChanged(address)
 
                 }

@@ -189,10 +189,10 @@ fun CupcakeApp(
                 )
             }
             composable(route = CupcakeScreen.PaymentDetails.name) {
-                val context = LocalContext.current
                 PaymentInputScreen(
                     onNextButtonClicked = { navController.navigate(CupcakeScreen.FinalSummary.name) },
                     onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController) },
+                    onValuesChanged = { viewModel.setShippingAddress(it) },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
