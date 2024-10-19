@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -29,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.example.cupcake.R
 import com.example.cupcake.ui.theme.CupcakeTheme
 
+var MAX_CARD_NUMBER_LENGTH = 16
+var MAX_EXP_DATE_LENGTH = 4
+var MAX_CVV_LENGTH = 3
 @Composable
 fun PaymentInputScreen(
     onCancelButtonClicked: () -> Unit = {},
@@ -45,7 +49,7 @@ fun PaymentInputScreen(
     var zip by rememberSaveable { mutableStateOf("") }
     var state by rememberSaveable { mutableStateOf("") }
 
-    //var selectedValue by rememberSaveable { mutableStateOf("") }
+    var isError by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
@@ -57,6 +61,7 @@ fun PaymentInputScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
+                singleLine = true,
                 label = { Text("Card Holder Name") },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                 modifier = Modifier.fillMaxWidth()
@@ -67,7 +72,20 @@ fun PaymentInputScreen(
         ){
             OutlinedTextField(
                 value = cardNumber,
-                onValueChange = { cardNumber = it },
+                onValueChange = {
+                    cardNumber = it
+                },
+                isError = !isValidLength(cardNumber, MAX_CARD_NUMBER_LENGTH),
+                singleLine = true,
+                supportingText = {
+                    if (isError) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.error,
+                            text = "Limit: ${cardNumber.length}/$MAX_CARD_NUMBER_LENGTH",
+                        )
+                    }
+                 },
                 label = { Text("Card Number") },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -82,7 +100,18 @@ fun PaymentInputScreen(
             ){
                 OutlinedTextField(
                     value = expDate,
-                    onValueChange = { expDate = it },
+                    onValueChange = { expDate = it  },
+                    isError = !isValidLength(expDate, MAX_EXP_DATE_LENGTH),
+                    singleLine = true,
+                    supportingText = {
+                        if (isError) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.error,
+                                text = "Limit: ${expDate.length}/$MAX_EXP_DATE_LENGTH",
+                            )
+                        }
+                    },
                     label = { Text("Exp. Date") },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number,
@@ -94,6 +123,18 @@ fun PaymentInputScreen(
                 OutlinedTextField(
                     value = cvv,
                     onValueChange = { cvv = it },
+                    isError = !isValidLength(cvv, MAX_CVV_LENGTH),
+                    singleLine = true,
+                    supportingText = {
+                        if (isError) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.error,
+                                text = "Limit: ${cvv.length}/$MAX_CVV_LENGTH",
+                            )
+                        }
+                    },
+
                     label = { Text("CVV") },
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Number,
@@ -110,6 +151,7 @@ fun PaymentInputScreen(
             OutlinedTextField(
                 value = address1,
                 onValueChange = { address1 = it },
+                singleLine = true,
                 label = { Text(text = "Address Line 1") },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                 modifier = Modifier.fillMaxWidth()
@@ -132,6 +174,7 @@ fun PaymentInputScreen(
             OutlinedTextField(
                 value = city,
                 onValueChange = { city = it },
+                singleLine = true,
                 label = { Text(text = "City") },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                 modifier = Modifier.fillMaxWidth()
@@ -144,6 +187,7 @@ fun PaymentInputScreen(
                 OutlinedTextField(
                     value = zip,
                     onValueChange = { zip = it },
+                    singleLine = true,
                     label = { Text("Zip Code") },
                     modifier = Modifier.weight(1f),
                     keyboardOptions = KeyboardOptions.Default.copy(
@@ -157,6 +201,7 @@ fun PaymentInputScreen(
                     value = state,
                     onValueChange = { state = it },
                     label = { Text("State") },
+                    singleLine = true,
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                     modifier = Modifier.weight(1f)
 
@@ -189,6 +234,10 @@ fun PaymentInputScreen(
             }
         }
     }
+}
+
+fun isValidLength(input: String, maxLength: Int): Boolean {
+    return (input.length <= maxLength) //if the input length is <= max length, it's true
 }
 
 @Preview
